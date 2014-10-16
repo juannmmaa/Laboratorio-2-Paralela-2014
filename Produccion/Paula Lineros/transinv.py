@@ -1,4 +1,5 @@
 
+import ImageFilter
 import numpy as np
 from numpy import array, shape, reshape, zeros, transpose
 from PIL import Image, ImageChops
