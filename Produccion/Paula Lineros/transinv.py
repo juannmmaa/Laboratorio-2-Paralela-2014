@@ -34,10 +34,34 @@ def transpuesta(img, g):
     imagen = imgColor.rotate(g)
     return imagen
 
+def blur(img):
+    arrImg=convertirImgMatrixRGB(img)
+    imgColor=Image.fromarray(arrImg)
+    blurred = imgColor.filter(ImageFilter.BLUR)
+    return blurred
+
+def sharpen(img):
+    arrImg=convertirImgMatrixRGB(img)
+    imgColor=Image.fromarray(arrImg)
+    sharpened = imgColor.filter(ImageFilter.SHARPEN)
+    return sharpened
+
+def edged(img):
+    arrImg=convertirImgMatrixRGB(img)
+    imgColor=Image.fromarray(arrImg)
+    edged = imgColor.filter(ImageFilter.EDGE_ENHANCE)
+    return edged
+    
 def main():
-    img=Image.open("imagennormal.png")
+    img=Image.open("imagennormal.png") #abre imagen
     imgColor=invertirImgColores(img)
-    imgColor.save("imagennormal2.png")
+    imgColor.save("imageninvertida.png") #guarda la imagen con colores invertidos
+    imgBlur=blur(img)
+    imgBlur.save("imagenblur.png") #guarda la imagen borrosa
+    imgEdged=edged(img)
+    imgEdged.save("imagenedged.png") #guarda la imagen "antigua"
+    imgSharpen=sharpen(img)
+    imgSharpen.save("imagensharpen.png") #guarda la imagen que destaca bordes
     imgTrans = transpuesta(img,90)
     imgTrans.save("imagentranspuesta90.png") #guarda la imagen transpuesta 90 grados
     imgTrans = transpuesta(img,180)
