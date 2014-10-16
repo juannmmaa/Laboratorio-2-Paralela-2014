@@ -3,10 +3,9 @@ __author__ = 'jonathan leon'
 """
 sumaFoto.py
 
-Entrada : 2 urls con imagenes, un valor float entre 0 y 1 y un valor entero entre
-           0 y 2 para el formato de salida. 0=>BMP , 1=>PNG , 2=>JPG 
+Entrada : 2 urls con imagenes, un valor float entre 0 y 1 y un formato
 
-Salida  : Una imagen llamada suma.bmp|png|jpg
+Salida  : Una imagen llamada suma.formato
 
 """
 
