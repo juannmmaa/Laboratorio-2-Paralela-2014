@@ -2,7 +2,7 @@
 import ImageFilter
 import numpy as np
 from numpy import array, shape, reshape, zeros, transpose
-from PIL import Image, ImageChops
+from PIL import Image, ImageChops, ImageOps
 
 
 # convierte una imagen tipo Imagen (de la libreria PIL) en una matriz(ETD) con la informacion RGB de la imagen
@@ -52,6 +52,12 @@ def edged(img):
     imgColor=Image.fromarray(arrImg)
     edged = imgColor.filter(ImageFilter.EDGE_ENHANCE)
     return edged
+
+def solarize(img):
+    arrImg=convertirImgMatrixRGB(img)
+    imgColor=Image.fromarray(arrImg)
+    solarize = ImageOps.solarize (imgColor, 128)
+    return solarize
     
 def main():
     img=Image.open("imagennormal.png") #abre imagen
@@ -63,6 +69,8 @@ def main():
     imgEdged.save("imagenedged.png") #guarda la imagen "antigua"
     imgSharpen=sharpen(img)
     imgSharpen.save("imagensharpen.png") #guarda la imagen que destaca bordes
+    imgSolarize=solarize(img)
+    imgSolarize.save("imagensolarize.png") #Invierte todos los valores de pixeles por encima del umbral dado.
     imgTrans = transpuesta(img,90)
     imgTrans.save("imagentranspuesta90.png") #guarda la imagen transpuesta 90 grados
     imgTrans = transpuesta(img,180)
@@ -71,6 +79,5 @@ def main():
     imgTrans.save("imagentranspuesta270.png") #guarda la imagen transpuesta 270 grados
     imgNegativa=convertirImgNegativo(img)
     imgNegativa.save("negativo.png") #guarda la imagen negativo
-
 
 main()
