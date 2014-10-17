@@ -1,36 +1,37 @@
 __author__ = 'francisco'
 
-import numpy
-import pyfits
+import numpy as np
 from PIL import Image
-import argparse
-
-parser = argparse.ArgumentParser(description="Convert an RGB or Grayscale image to FITS format")
-parser.add_argument("ViendoFacebook.png", type=open,  help='Image file to convert')
-args = parser.parse_args()
-
-im = Image.open(args.file)           # read the image
-assert im.mode in ["RGB", "L" ], \
-    "File %s is of type '%s', which is not supported" % (args.file, im.mode)
-a = numpy.array(im)                  # convert to array
-filestem = args.file.name.split('.')[0]
-
-def add_comments(hdu):
-    hdu.header.add_comment("Written by image2fits.py, Will Henney 2011,2012")
-    hdu.header.add_comment("Converted from  %s" % (args.file.name))
 
 
-if im.mode == "RGB":
-    # split out the channels, flipping the y-axis
-    r, g, b = [a[::-1,:,i] for i in 0, 1, 2]
-    # Write each channel to a FITS file: XXX-red.fits, XXX-green.fits, XXX-blue.fits
-    for chan, color in zip([r, g, b], ["red", "green", "blue"]):
-        hdu =  pyfits.PrimaryHDU(chan)
-        # Use the OBJECT keyword to describe this channel
-        hdu.header.update('OBJECT', "%s channel" % (color))
-        add_comments(hdu)
-        hdu.writeto("%s-%s.fits" % (filestem, color), clobber=True)
-else:
-    hdu =  pyfits.PrimaryHDU(a[::-1,:])
-    add_comments(hdu)
-    hdu.writeto("%s.fits" % (filestem), clobber=True)
+# convierte una imagen tipo Imagen (de la libreria PIL) en una matriz(ETD) con la informacion RGB de la imagen
+def convertirImgMatrixRGB(img):
+    return np.array(img.convert("RGB"))
+
+# convierte una imagen tipo Imagen (de la libreria PIL) a imagen en Negativo
+# procedimiento : multiplica por base 255 cada casilla de la matriz RGB para convertir la imagen en negativo
+def mezclarRGB(img,R,G,B):
+    arrImg=convertirImgMatrixRGB(img)
+    print arrImg
+    for i in range(img.size[1]):
+        for j in range(img.size[0]):
+            print str(i),",",str(j)
+            print arrImg[i][j]
+            arrImg[i][j][0] = (arrImg[i][j][0]+R)/2
+            arrImg[i][j][1] = (arrImg[i][j][1]+G)/2
+            arrImg[i][j][2] = (arrImg[i][j][2]+B)/2
+            print arrImg[i][j]
+    imgNegativa=Image.fromarray(arrImg)
+    return imgNegativa
+
+
+
+def main():
+    img=Image.open("ViendoFacebook.png")
+    R=191
+    G=191
+    B=191
+    imgNegativa=mezclarRGB(img,R,G,B)
+    imgNegativa.save("output3.png")    #guarda la imagen negativo
+
+main()
