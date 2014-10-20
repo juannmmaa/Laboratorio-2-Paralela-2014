@@ -11,62 +11,25 @@ from PIL import ImageEnhance
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 
-#aplicar brillo con libreria PIL
-def aplicarBrillo(img,factor):
+
+#Recibiendo una matriz, transformandola a imagen para trabajarla y devolviendo una matriz
+def aplicarBrillo(imgMatriz):
+    img = Image.fromarray(imgMatriz) #convierto el pedaz ode imagen en una imagen para trabajar con la libreria PIL
+    print"ingrese factor para aplicar brillo (metodo 1)"#si el factor esta entre 0.0 y 1.0 la imagen se opacara, de ahi en mas aumentara el brillo
+                                                        #y si el valor es menor que 0 la imagen queda completamente negra
+    factor = input()
     imagen = ImageEnhance.Brightness(img)
-    imConBrillo = imagen.enhance(factor) #si el factor esta entre 0.0 y 1.0 la imagen se opacara, de ahi en mas aumentara el brillo
-                                         #y si el valor es menor que 0 la imagen queda completamente negra
-    return imConBrillo
+    imConBrillo = imagen.enhance(factor)
 
-#aplicar reflejo con libreria PIL
-def aplicarReflejo(img):
-    xsize, ysize = img.size
-
-    #se debe hacer una copia de la imagen
-    imgCopia = img.copy()
-    #se debe rotar la imagen
-    imgCopia = imgCopia.rotate(180)
-    #se pega bajo la imagen original
-    img = img.rotate(90) #roto las imagenes
-    imgCopia=imgCopia.rotate(90)
-    arrImg=convertirImgMatrixRGB(img) #se transforman en matriz para poder ser sumadas
-    arrImgCopia = convertirImgMatrixRGB(imgCopia)
-    arrResul=arrImg + arrImgCopia #suma de ambas imagenes
-    print arrResul
-    imgReflejo=Image.fromarray(arrResul) #convierte la matriz en imagen
-    imgReflejo = imgReflejo.rotate(270) #se rota para que quede vertical
-
-    #se aplica transparencia a la imagen rotada
-    return imgReflejo
-
+    brilloMat = convertirImgMatrixRGB(imConBrillo) #devuelve una matriz con la informacion RGB de la imagen modificada
+    return brilloMat
 
 def main():
     img=Image.open("imagenMuestra.jpg")
-    print"ingrese factor"
-    factor = input()
-    imgBrillo = aplicarBrillo(img,factor)
-    imgBrillo.save("resultado.jpg")
-
-    imgReflejo = aplicarReflejo(img)
-    imgReflejo.save("copia.png")
-
-
-###Puede servir para unir las imagenes al final
-'''
-    #opens an image:
-    im = Image.open("imagenMuestra.jpg")
-    #creates a new empty image, RGB mode, and size 400 by 400.
-    new_im = Image.new('RGB', (400,400))
-    #Here I resize my opened image, so it is no bigger than 100,100
-    im.thumbnail((100,100))
-    #Iterate through a 4 by 4 grid with 100 spacing, to place my image
-    for i in xrange(0,500,100):
-        for j in xrange(0,500,100):
-            #I change brightness of the images, just to emphasise they are unique copies.
-            im=Image.eval(im,lambda x: x+(i+j)/30)
-               #paste the image at location i,j:
-            new_im.paste(im, (i,j))
-
-    #new_im.save("union.png") '''
+    imgMatriz = convertirImgMatrixRGB(img) #transformamos la imagen a una matriz, en caso de paralelizar sera facil dividir la imagen en los nodos
+    imgBrillo = aplicarBrillo(imgMatriz) #Devuelve una matriz de la imagen con brillo aplicado
+    print imgBrillo #comprobamos que nos devuelve una matriz
+    imagenMod = Image.fromarray(imgBrillo)
+    imagenMod.save("resultado1.jpg")
 
 main()
