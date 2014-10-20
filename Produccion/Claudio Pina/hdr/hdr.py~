@@ -3,12 +3,6 @@
 
 __author__ = 'cpina'
 
-'''
-versión 1.0 de hdr
-
-	falta optimizar el proceso de difuminación de pixeles y la superposición de capas
-'''
-
 import numpy as np
 from PIL import Image
 from PIL import ImageEnhance
@@ -28,7 +22,7 @@ def aplicarBrillo(img,factor):
     return imConBrillo					 #el brillo, y si el valor es menor que 0 la imagen queda completamente negra
 
 
-#resta los niveles de luminosidad de cada imagen para lograr el efecto hdr.
+#mezcla 2 imagenes en una,el alfa es usado para definir el nivel de transparencia de las imagenes.
 def restabrillo(img1,img2):
     arrImg1=convertirImgMatrixRGB(img1)
     arrImg2=convertirImgMatrixRGB(img2)
