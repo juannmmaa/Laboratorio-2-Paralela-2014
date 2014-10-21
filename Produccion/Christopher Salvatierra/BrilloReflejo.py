@@ -1,3 +1,4 @@
+from __future__ import division
 __author__ = 'Christopher Salvatierra L.'
 
 
@@ -7,29 +8,38 @@ from PIL import ImageEnhance
 
 
 
+
 # convierte una imagen tipo Imagen (de la libreria PIL) en una matriz(ETD) con la informacion RGB de la imagen
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 
 
-#Recibiendo una matriz, transformandola a imagen para trabajarla y devolviendo una matriz
-def aplicarBrillo(imgMatriz):
-    img = Image.fromarray(imgMatriz) #convierto el pedaz ode imagen en una imagen para trabajar con la libreria PIL
-    print"ingrese factor para aplicar brillo (metodo 1)"#si el factor esta entre 0.0 y 1.0 la imagen se opacara, de ahi en mas aumentara el brillo
-                                                        #y si el valor es menor que 0 la imagen queda completamente negra
-    factor = input()
-    imagen = ImageEnhance.Brightness(img)
-    imConBrillo = imagen.enhance(factor)
 
-    brilloMat = convertirImgMatrixRGB(imConBrillo) #devuelve una matriz con la informacion RGB de la imagen modificada
-    return brilloMat
+#Trabajando en como matriz siempre
+def aplicarBrillo(img,factor):
+    arrImg=convertirImgMatrixRGB(img)
+    #si el factor es menor a cero la imagen se oscurece (rango 0 a -1)
+    if factor <0:#para oscurecer la imagen
+        for i in range(img.size[1]):
+            for j in range(img.size[0]):
+                brillo= lambda x: x*(1+factor)
+                arrImg[i][j]=brillo(arrImg[i][j])
+    #si el factor es mayor a cero se aclara (rango 0 a 1)
+    else:#brillo
+        for i in range(img.size[1]):
+            for j in range(img.size[0]):
+                brillo= lambda x: x+ (255-x)*factor
+                arrImg[i][j]=brillo(arrImg[i][j])
+    imgBrillante=Image.fromarray(arrImg)
+    return imgBrillante
 
 def main():
-    img=Image.open("imagenMuestra.jpg")
-    imgMatriz = convertirImgMatrixRGB(img) #transformamos la imagen a una matriz, en caso de paralelizar sera facil dividir la imagen en los nodos
-    imgBrillo = aplicarBrillo(imgMatriz) #Devuelve una matriz de la imagen con brillo aplicado
-    print imgBrillo #comprobamos que nos devuelve una matriz
-    imagenMod = Image.fromarray(imgBrillo)
-    imagenMod.save("resultado1.jpg")
+    img=Image.open("imagenMuestra2.jpg")
+    print"Ingrese factor"
+    factor=input()
+    imgBrillo = aplicarBrillo(img,factor)
+    imgBrillo.save("resultado1.jpg")
+    imgBrillo.show()
+
 
 main()
