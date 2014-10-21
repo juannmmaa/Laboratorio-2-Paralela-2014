@@ -29,11 +29,22 @@ def invertirImgColores(img): # al parecer es la misma que el negativo
     img = ImageChops.invert(imgColor)
     return img
 
-def transpuesta(img, g):
-    arrImg=convertirImgMatrixRGB(img)
-    imgColor=Image.fromarray(arrImg)
-    imagen = imgColor.rotate(g)
-    return imagen
+def rotar90(img):
+    arrImg = convertirImgMatrixRGB(img)
+    n = img.size[0]
+    m = img.size[1]
+    final = np.array(Image.new("RGB",(m,n)))
+    for i in range(n): #fila
+        for j in range(m): #columna
+            final[i][j] = arrImg[::, ((i*-1)-1)][j]
+    imgColor = Image.fromarray(final)
+    return imgColor
+
+def rotar180(img):
+    return rotar90(rotar90(img)) #debido a que el algoritmo de cambio de posicion es el mismo
+
+def rotar270(img):
+    return rotar180(rotar90(img))
 
 def blur(img):
     arrImg=convertirImgMatrixRGB(img)
@@ -71,11 +82,11 @@ def main():
     imgSharpen.save("imagensharpen.png") #guarda la imagen que destaca bordes
     imgSolarize=solarize(img)
     imgSolarize.save("imagensolarize.png") #Invierte todos los valores de pixeles por encima del umbral dado.
-    imgTrans = transpuesta(img,90)
+    imgTrans = rotar90(img)
     imgTrans.save("imagentranspuesta90.png") #guarda la imagen transpuesta 90 grados
-    imgTrans = transpuesta(img,180)
+    imgTrans = rotar180(img)
     imgTrans.save("imagentranspuesta180.png") #guarda la imagen transpuesta 180 grados
-    imgTrans = transpuesta(img,270)
+    imgTrans = rotar270(img)
     imgTrans.save("imagentranspuesta270.png") #guarda la imagen transpuesta 270 grados
     imgNegativa=convertirImgNegativo(img)
     imgNegativa.save("negativo.png") #guarda la imagen negativo
