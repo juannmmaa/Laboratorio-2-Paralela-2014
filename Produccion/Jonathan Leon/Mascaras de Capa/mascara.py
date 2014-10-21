@@ -1,3 +1,4 @@
+from __future__ import division 
 __author__ = 'jonathan'
 
 import numpy as np
