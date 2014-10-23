@@ -12,14 +12,16 @@ def convertirImgMatrixRGB(img):
 # convierte una imagen tipo Imagen (de la libreria PIL) a imagen en Negativo
 # procedimiento : multiplica por base 255 cada casilla de la matriz RGB para convertir la imagen en negativo
 
-
 def invertirImgColores(img): # al parecer es la misma que el negativo
-    arrImg=convertirImgMatrixRGB(img)
-    for i in range(img.size[1]):
-        for j in range(img.size[0]):
-            arrImg[i][j]=(arrImg[i][j])*255
-    imgColor=Image.fromarray(arrImg)
-    return imgColor
+    n = img.size[0]
+    m = img.size[1]
+    for i in range(n):
+        for j in range(m):
+            # Obtenemos los colores RGB pixel por pixel
+            r, g, b = img.getpixel((i, j))
+            # Cambiamos el RGB del pixel
+            img.putpixel((i, j), ((255-r), (255-g), (255-b)))
+    return img
 
 def rotar90(img):
     arrImg = convertirImgMatrixRGB(img)
