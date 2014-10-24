@@ -17,9 +17,9 @@ def convertirImgNegativo(img):
 
 def rgb(img):
     arrImg=convertirImgMatrixRGB(img)
-    r=150
-    g=200
-    b=-130
+    r=170
+    g=0
+    b=100
     for i in range(img.size[1]):
         for j in range(img.size[0]):
             arrImg[i][j][0] = (arrImg[i][j][0]+r)/2
