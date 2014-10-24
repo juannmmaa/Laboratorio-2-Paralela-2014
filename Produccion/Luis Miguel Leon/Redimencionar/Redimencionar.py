@@ -20,12 +20,12 @@ def redimencionarImg(img,img2):
     for i in range(finalAncho):
         for j in range(finAlto):
             #Variables x y dependiendo de resolucion de salida.
-            x = (distanX * j);
-            y = (distanY * i);
+            x = (distanX * i);
+            y = (distanY * j);
 
             #Direfencia entre distancia y el pixel que esta.
-            diferX = (distanX * j) - x;
-            diferY = (distanY * i) - y;
+            diferX = (distanX * i) - x;
+            diferY = (distanY * j) - y;
 
             #Tomo pixeles adyacentes, dependiendo de la resolucion que debo entregar.
             a = arrImg[x][y] 
@@ -55,12 +55,12 @@ def redimencionarImg(img,img2):
 def main():
     
     imag = Image.open("base.png")
-    #Tama�o de imagen tiene que estar en la misma escala que la original.
-    imag = imag.resize((100, 100), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tama�o de la final de la imagen redimencionada.
+    #TamaÃ±o de imagen tiene que estar en la misma escala que la original.
+    imag = imag.resize((400, 418), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
     imag.save("output1.jpg")
 
     
-    img=Image.open("prueba.jpg")
+    img=Image.open("descarga.jpg")
     img2=Image.open("output1.jpg")
     
     imgRedimencionada=redimencionarImg(img,img2)
@@ -68,8 +68,6 @@ def main():
     #saludo = raw_input("Escribe lo que sea")
     #print saludo
 main()
-
-
 
 
 
