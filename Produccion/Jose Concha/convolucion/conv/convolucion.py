@@ -3,18 +3,52 @@ import numpy as np
 from PIL import Image
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
-def convolucionImg(img):    #media movil
-    arrAux = convertirImgMatrixRGB(img)
-    arrImg = arrAux
-    for i in range(img.size[1]):
-        for j in range(img.size[0]):
-            if (i>0 and i<img.size[1]-1) and (j>0 and j<img.size[0]-1):
-                media = arrImg[i-1][j]+arrImg[i-1][j-1]+arrImg[i][j-1]+arrImg[i+1][j-1]+arrImg[i+1][j]+arrImg[i+1][j+1]+arrImg[i][j+1]+arrImg[i-1][j+1]
-                arrAux[i][j]=media/8
+def matrizNorma(arr):
+    suma =0
+    for i in range(3):
+        for j in range(3):
+            suma += arr[i][j]
+    return suma
+def filtroLineal(arrImg):
+    arrAux = arrImg
+    nucleo =[[.11,.11,.11],[.11,.11,.11],[.11,.11,.11]]
+    for z in range(3):
+        for x in range(len(arrAux)):
+            for y in range(len(arrAux[0])):
+                suma = 0
+                for i in range(3):
+                    for j in range(3):
+                        try:
+                            suma += int(arrImg[x-1+i][y-1+j][z]*nucleo[i][j])
+                        except IndexError:
+                            suma += 0
+                arrAux[x][y][z]=suma
+    return arrAux
+def borde(arrImg):
+    arrAux = arrImg
+    nucleo =[[0,1,0],[1,-4,1],[0,1,0]]
+    for z in range(3):
+        for x in range(len(arrAux)):
+            for y in range(len(arrAux[0])):
+                suma = 0
+                for i in range(3):
+                    for j in range(3):
+                        try:
+                            suma += int(arrImg[x-1+i][y-1+j][z]*nucleo[i][j])
+                        except IndexError:
+                            suma += 0
+                arrAux[x][y][z]=suma
+    return arrAux
+def convolucionImg(img, caso = 0):
+    arrImg = convertirImgMatrixRGB(img)
+    if caso ==0:
+        arrAux = filtroLineal(arrImg)
+    elif caso == 1:
+        arrAux = borde(arrImg)
     convImg = Image.fromarray(arrAux)
     return convImg
 def main():
     img = Image.open('Lenna.png')
-    convImg = convolucionImg(img)
+    convImg = convolucionImg(img,1)
     convImg.save('convLenna.png')
 main()
