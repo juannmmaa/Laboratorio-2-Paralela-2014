@@ -22,15 +22,15 @@ def PasarDiaNoche(img):
     contraste = ImageEnhance.Contrast(imgNoche)
     imgNoche = contraste.enhance(1.2) #asigna un valor para el contraste de la imagen
     brillo = ImageEnhance.Brightness(imgNoche)
-    imgNoche = brillo.enhance(0.5) #asigna un valor para el brillo de la imagen
+    imgNoche = brillo.enhance(0.7) #asigna un valor para el brillo de la imagen
     nitidez = ImageEnhance.Sharpness(imgNoche)
-    imgNoche = nitidez.enhance(1.5) #asigna un valor para la nitidez de la imagen
+    imgNoche = nitidez.enhance(2) #asigna un valor para la nitidez de la imagen
     return imgNoche
 def main():
     """las siguientes dos lineas corresponden al nombre del archivo y la extension con el fin de
     nombrar el archivo de salida como <nombreArchivo>Noche.<extension>
     ejemplo: paisaje.jpg -> paisajeNoche.jpg"""
-    nombreImg = "mallCastro"
+    nombreImg = "paisaje2"
     extension = ".jpg"
     img=Image.open(nombreImg + extension)
     arrImg = convertirImgMatrixRGB(img)
