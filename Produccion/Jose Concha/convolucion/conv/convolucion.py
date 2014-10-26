@@ -1,15 +1,12 @@
+from numpy.matrixlib.defmatrix import matrix
+
 __author__ = 'jose'
 import numpy as np
 from PIL import Image
+import math
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
-def matrizNorma(arr):
-    suma =0
-    for i in range(3):
-        for j in range(3):
-            suma += arr[i][j]
-    return suma
-def filtroLineal(arrImg):
+def filtroLinealS(arrImg):
     arrAux = arrImg
     nucleo =[[.11,.11,.11],[.11,.11,.11],[.11,.11,.11]]
     for z in range(3):
@@ -24,9 +21,9 @@ def filtroLineal(arrImg):
                             suma += 0
                 arrAux[x][y][z]=suma
     return arrAux
-def borde(arrImg):
+def filtroLinealS2(arrImg):
     arrAux = arrImg
-    nucleo =[[0,1,0],[1,-4,1],[0,1,0]]
+    nucleo =[[.0625,.125,.0625],[.125,.25,.125],[.0625,.125,.0625]]
     for z in range(3):
         for x in range(len(arrAux)):
             for y in range(len(arrAux[0])):
@@ -39,16 +36,41 @@ def borde(arrImg):
                             suma += 0
                 arrAux[x][y][z]=suma
     return arrAux
+def filtroLinealR(arrImg):
+    arrAux = arrImg
+    nucleo =[[-1,-1,-1],[-1,9,-1],[-1,-1,-1]]
+    for z in range(3):
+        for x in range(len(arrAux)):
+            for y in range(len(arrAux[0])):
+                suma = 0
+                for i in range(3):
+                    for j in range(3):
+                        try:
+                            suma += int(arrImg[x-1+i][y-1+j][z]*nucleo[i][j])
+                        except IndexError:
+                            suma += 0
+                if suma>255:
+                    suma=255
+                elif suma<0:
+                    suma =0
+                arrAux[x][y][z]=suma
+    return arrAux
 def convolucionImg(img, caso = 0):
     arrImg = convertirImgMatrixRGB(img)
     if caso ==0:
-        arrAux = filtroLineal(arrImg)
+        arrAux = filtroLinealS(arrImg)
     elif caso == 1:
-        arrAux = borde(arrImg)
+        arrAux = filtroLinealS2(arrImg)
+    elif caso == 2:
+        arrAux = filtroLinealR(arrImg)
     convImg = Image.fromarray(arrAux)
     return convImg
 def main():
     img = Image.open('Lenna.png')
+    convImg = convolucionImg(img)
+    convImg.save('conv0.png')
     convImg = convolucionImg(img,1)
-    convImg.save('convLenna.png')
+    convImg.save('conv1.png')
+    convImg = convolucionImg(img,2)
+    convImg.save('conv2.png')
 main()
