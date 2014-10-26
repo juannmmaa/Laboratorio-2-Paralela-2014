@@ -1,48 +1,67 @@
+import colorsys
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageEnhance
 
+# propiedades de NP para cambiar de modo RGB a HSV y viceversa
+rgb_to_hsv = np.vectorize(colorsys.rgb_to_hsv)
+hsv_to_rgb = np.vectorize(colorsys.hsv_to_rgb)
 
 # convertimos imagen a RGB para cambiar tonalidades rojas, azules y verdes.
 def convertirImgMatrixRGB(img):
-    return np.array(img.convert("RGB"))
+	return np.array(img.convert("RGB"))
 
-# Primer paso para aplicar efecto infrarrojo a imagen es aplicar negativo
-def convertirImgNegativo(img):
-    arrImg = convertirImgMatrixRGB(img)
-    for i in range(img.size[1]):
-        for j in range(img.size[0]):
-            arrImg[i][j] = 255-arrImg[i][j]
-    imgNegativo = Image.fromarray(arrImg)
-    return imgNegativo
+# Resaltamos ciertos tonos como el rojo por sobre los demas para dar un efecto adicional
+def retoquecolor(img):
+	for i in range(img.size[0]):
+		for j in range(img.size[1]):
+			r, g, b = img.getpixel((i, j))
+			img.putpixel((i, j), ((r+220)/3, (r+g+b+70)/3, (r+g+b+90)/3))
+	return img
 
-def rgb(img):
-    arrImg=convertirImgMatrixRGB(img)
-    r=170
-    g=0
-    b=100
-    for i in range(img.size[1]):
-        for j in range(img.size[0]):
-            arrImg[i][j][0] = (arrImg[i][j][0]+r)/2
-            arrImg[i][j][1] = (arrImg[i][j][1]+g)/2
-            arrImg[i][j][2] = (arrImg[i][j][2]+b)/2
-    imgRGB=Image.fromarray(arrImg)
-    return imgRGB
 
-# ... Aun no sabemos si nos sirve utilizar esta funcion. 
-def sumarImagenes(img1,img2):
-    ALFA=0.5
-    arrImg1=convertirImgMatrixRGB(img1)
-    arrImg2=convertirImgMatrixRGB(img2)
-    for i in range(img1.size[1]):
-        for j in range(img1.size[0]):
-            sumaPixel= (arrImg1[i][j]*(1-alfa))+(arrImg2[i][j]*(alfa))
-            arrImg1[i][j]=sumaPixel
-    imgSuma=Image.fromarray(arrImg1)
-    return imgSuma
+# funcion que blanquea las tonalidades verdes.
+def blanquear(img):
+	arrImg = convertirImgMatrixRGB(img)
+	for i in range(img.size[1]):
+		for j in range(img.size[0]):
+			if(arrImg[i][j][1]>240 and arrImg[i][j][0]<30 and arrImg[i][j][2]<30):
+				arrImg[i][j][0] =255
+				arrImg[i][j][1] =255
+				arrImg[i][j][2] =255
+	imgblanqueada = Image.fromarray(arrImg)
+	return imgblanqueada
+
+
+# asigna mayor brillo y contraste a la imagen
+def tonos(img):
+	imgtono= ImageEnhance.Brightness(img).enhance(1000)
+	imgtono= ImageEnhance.Contrast(img).enhance(3)
+	return imgtono
+
+# resaltamos matiz de la imagen 
+def color(imagen, matiz):
+	img = imagen.convert('RGBA')
+	arr = np.array(np.asarray(img).astype('float'))
+	imgresaltada = Image.fromarray(cambiar_matiz(arr, matiz/360.).astype('uint8'), 'RGBA')
+
+	return imgresaltada
+
+# aplicamos grado de matiz al modo HSV
+def cambiar_matiz(arr, grado_matiz):
+    r, g, b, a = np.rollaxis(arr, axis=-1)
+    h, s, v = rgb_to_hsv(r, g, b)
+    h = grado_matiz
+    r, g, b = hsv_to_rgb(h, s, v)
+    arr = np.dstack((r, g, b, a))
+    return arr
 
 def main():
-    img = Image.open('1.jpg')
-    imgNegativo = convertirImgNegativo(img)
-    imgfinal=rgb(imgNegativo)
-    imgfinal.save("output.png")
+    #Asignamos un grado de matiz para resaltar colores
+    matiz=190
+    img = Image.open('imagen1.jpg')
+    imgtocada=retoquecolor(img)
+    imgcolor=color(imgtocada,matiz)
+    imgblanc= blanquear(imgcolor)
+    imgfinal= tonos(imgblanc)
+    imgfinal.save("final.png")
 main()
