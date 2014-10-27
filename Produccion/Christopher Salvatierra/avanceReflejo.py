@@ -16,8 +16,8 @@ def aplicarReflejo(img):
     inv = inv.rotate(180) #se gira
     copiaInvertida = convertirImgMatrixRGB(inv) #se convierten en matrices ambas imagenes
     imgMatriz = convertirImgMatrixRGB(img)
-    filas = img.size[1]
-    columnas = img.size[0]
+    #filas = img.size[1]
+    #columnas = img.size[0]
 
     '''filTotal = filas
     copia = imgMatriz #una matriz de copia para mantener la original
@@ -30,9 +30,9 @@ def aplicarReflejo(img):
             copia[(filas-1)-i][(columnas-1)-j] = fila #copia la fila obtenida al final de la matriz
     print "LA MATRIZ INVERTIDA"
     '''
-    arreglo = np.vstack((imgMatriz,copiaInvertida))
+    arreglo = np.vstack((imgMatriz,copiaInvertida)) #junta dos arreglos numpy uno sobre otro 
     #print copiaInvertida
-    imgInvertida = Image.fromarray(arreglo)
+    imgInvertida = Image.fromarray(arreglo)#convierte el arreglo a imagen para ser devuelvo al main
     return imgInvertida
 
 def main():
