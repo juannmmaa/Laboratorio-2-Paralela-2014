@@ -2,6 +2,7 @@ __author__ = 'Fco_Hernan'
 
 import numpy as np
 from PIL import Image
+import time
 
 
 # convierte una imagen tipo Imagen (de la libreria PIL) en una matriz(ETD) con la informacion RGB de la imagen
@@ -22,11 +23,15 @@ def mezclarRGB(img,r,g,b):
     return imgRGB
 
 def main():
+    starting_point=time.time()
     img=Image.open("8K.jpg")
     r=50
     g=160
     b=320
     imgRGB=mezclarRGB(img,r,g,b)
     imgRGB.save("output.png")    #guarda la imagen RGB
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 
 main()
