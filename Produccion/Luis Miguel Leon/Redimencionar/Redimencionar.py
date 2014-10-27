@@ -15,6 +15,9 @@ def redimencionarImg(img,img2):
     distanY = (alto-1) /float(finAlto)
     arrImg=convertirImgMatrixRGB(img)
     arrImg2=convertirImgMatrixRGB(img2)
+    print arrImg[76][40]
+    print arrImg[76][41]
+    print arrImg[76.4][40.6]
     
 #   Proceso de redimensionado
     for i in range(finalAncho):
@@ -60,7 +63,7 @@ def main():
     imag.save("output1.jpg")
 
     
-    img=Image.open("descarga.jpg")
+    img=Image.open("prueba.jpg")
     img2=Image.open("output1.jpg")
     
     imgRedimencionada=redimencionarImg(img,img2)
