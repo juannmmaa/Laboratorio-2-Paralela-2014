@@ -1,6 +1,7 @@
 __author__ = 'jose'
 import numpy as np
 from PIL import Image
+import colorsys
 
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
@@ -13,9 +14,11 @@ def convertirImgSepia(img):
             arrImg[i][j][2] = arrImg[i][j][0]*0.272 + arrImg[i][j][1]*0.534 + arrImg[i][j][2]*0.131
     imgSepia = Image.fromarray(arrImg)
     return imgSepia
+    imgSepia = Image.fromarray(arrImg)
+    return imgSepia
 def convertirImgSepiaV2(img):
     arrImg=convertirImgMatrixRGB(img)
-    tonoSepia=15
+    tonoSepia=10
     luminancia=[]
     for i in range(img.size[1]):
         luminancia.append([])
