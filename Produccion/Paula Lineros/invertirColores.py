@@ -1,6 +1,7 @@
 
 import ImageFilter
 import numpy as np
+import time
 from numpy import array, shape, reshape, zeros, transpose
 from PIL import Image, ImageChops, ImageOps
 
