@@ -7,8 +7,10 @@ def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 
 def filtrohdr(imag,imag1,imag2,imag3,blanco):
-    alto=imag.size[1]
     ancho=imag.size[0]
+    alto=imag.size[1]
+    print ancho
+    print alto
     arrblanco=convertirImgMatrixRGB(blanco)
     arrImagE = [convertirImgMatrixRGB(imag),convertirImgMatrixRGB(imag1),convertirImgMatrixRGB(imag2),convertirImgMatrixRGB(imag3)]
 
@@ -19,16 +21,17 @@ def filtrohdr(imag,imag1,imag2,imag3,blanco):
     print aa
     print bb
     print cc
-    ee= aa+bb+cc
+    ee= int(aa)+int(bb)+int(cc)
     print ee
 #   Proceso de redimensionado
-    for i in range(ancho):
-        for j in range(alto):
-            claro=arrImagE[0][i][j]
-            claro[0]=0
-            claro[1]=0
-            claro[2]=0
-            oscuro = claro
+    for i in range(alto):
+        for j in range(ancho):
+            Rc=0
+            Gc=0
+            Bc=0
+            Ro=0
+            Go=0
+            Bo=0
             contadorC=0
             contadorO=0
             d=0;
@@ -37,19 +40,25 @@ def filtrohdr(imag,imag1,imag2,imag3,blanco):
                 b =arrImagE[k][i][j][1]
                 c =arrImagE[k][i][j][2]
                 
-                d= (a+b+c)/float(3)
+                d= (int(a)+int(b)+int(c))/float(3)
                 if(d <127):
-                    oscuro=oscuro+arrImagE[k][i][j]
+                    Ro=Ro+a
+                    Go=Go+b
+                    Bo=Bo+c
                     contadorO=contadorO+1
                 else:
-                    claro=claro+arrImagE[k][i][j]
-                    contadorC=contadorC+1
-                
+                    Rc=Rc+a
+                    Gc=Gc+b
+                    Bc=Bc+c
+                    contadorC=contadorC+1 
             if(contadorO>contadorC):
-                arrblanco[i][j]=oscuro/contadorO
+                arrblanco[i][j][0]= Ro/contadorO
+                arrblanco[i][j][1]= Go/contadorO
+                arrblanco[i][j][2]= Bo/contadorO
             else:
-                arrblanco[i][j]=claro/contadorC
-       
+                arrblanco[i][j][0]=Rc/contadorC
+                arrblanco[i][j][1]=Gc/contadorC
+                arrblanco[i][j][2]=Bc/contadorC
     imgRedimencionada=Image.fromarray(arrblanco)
     return imgRedimencionada
 
@@ -58,7 +67,7 @@ def main():
     imag = Image.open("orig_0.jpg")
     imag1 = Image.open("orig_1.jpg")
     imag2 = Image.open("orig_2.jpg")
-    imag3 = Image.open("orig_2.jpg")
+    imag3 = Image.open("orig_3.jpg")
 
     base = Image.open("base.jpg")
     base = base.resize((imag.size[0], imag.size[1]), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.

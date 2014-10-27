@@ -7,25 +7,33 @@ def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 
 def redimencionarImg(img,img2):
-    alto=img.size[1]
     ancho=img.size[0]
-    finalAncho=img2.size[1]
-    finAlto= img2.size[0]
+    alto=img.size[1]
+    finalAncho=img2.size[0]
+    finAlto= img2.size[1]
+    print ancho
+    print alto
+    print finalAncho
+    print finAlto
     distanX = (ancho-1)/float(finalAncho)
     distanY = (alto-1) /float(finAlto)
     arrImg=convertirImgMatrixRGB(img)
     arrImg2=convertirImgMatrixRGB(img2)
     print arrImg[76][40]
     print arrImg[76][41]
-    print arrImg[76.4][40.6]
+    print arrImg[76][40.6]
     
 #   Proceso de redimensionado
-    for i in range(finalAncho):
+    for i in range(finalAncho ):
         for j in range(finAlto):
             #Variables x y dependiendo de resolucion de salida.
+            print i
+            print j
             x = (distanX * i);
             y = (distanY * j);
-
+            print x
+            print y
+            print "22222222222222"
             #Direfencia entre distancia y el pixel que esta.
             diferX = (distanX * i) - x;
             diferY = (distanY * j) - y;
@@ -59,15 +67,15 @@ def main():
     
     imag = Image.open("base.png")
     #TamaÃ±o de imagen tiene que estar en la misma escala que la original.
-    imag = imag.resize((400, 418), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
+    imag = imag.resize((10, 20), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
     imag.save("output1.jpg")
 
     
-    img=Image.open("prueba.jpg")
+    img=Image.open("salidaFinal.jpg")
     img2=Image.open("output1.jpg")
     
     imgRedimencionada=redimencionarImg(img,img2)
-    imgRedimencionada.save("salidaFinal.jpg")
+    imgRedimencionada.save("salidaFinal2.jpg")
     #saludo = raw_input("Escribe lo que sea")
     #print saludo
 main()
