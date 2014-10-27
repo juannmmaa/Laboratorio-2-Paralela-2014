@@ -33,6 +33,7 @@ def main(): #Comentar el que no se quiera utilizar
     imgTrans = rotar180(img)
     imgTrans.save("imagentranspuesta180.png") #guarda la imagen transpuesta 180 grados
     imgTrans = rotar270(img)
+    imgTrans.save("imagentranspuesta270.png") #guarda la imagen transpuesta 270 grados
     elapsed_time=time.time()-starting_point #calculo
     print ""
     print "Serial Time [seconds]: " + str(elapsed_time) #segundos
