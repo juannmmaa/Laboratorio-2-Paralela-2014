@@ -19,31 +19,46 @@ def redimencionarImg(img,img2):
     distanY = (alto-1) /float(finAlto)
     arrImg=convertirImgMatrixRGB(img)
     arrImg2=convertirImgMatrixRGB(img2)
-    print arrImg[76][40]
-    print arrImg[76][41]
-    print arrImg[76][40.6]
+
+
+
+    print "*********************"
+    print arrImg[159][150]
+    print arrImg[99][150]
+    print "*********************"
+    print distanX
+    print distanY
     
 #   Proceso de redimensionado
-    for i in range(finalAncho ):
-        for j in range(finAlto):
+    for i in range(finAlto-1 ):
+        for j in range(finalAncho-1 ):
             #Variables x y dependiendo de resolucion de salida.
-            print i
             print j
-            x = (distanX * i);
-            y = (distanY * j);
+            print i
+            x = (distanX * j);
+            y = (distanY * i);
             print x
             print y
             print "22222222222222"
-            #Direfencia entre distancia y el pixel que esta.
-            diferX = (distanX * i) - x;
-            diferY = (distanY * j) - y;
-
+            if(x>(ancho-2)):
+                x=x-2
+            if(y>(alto-2)):
+                y=y-2
             #Tomo pixeles adyacentes, dependiendo de la resolucion que debo entregar.
             a = arrImg[x][y] 
             b = arrImg[x][y+1]
             c = arrImg[x+1][y]
             d = arrImg[x+1][y+1]
 
+
+
+
+
+
+
+            #Direfencia entre distancia y el pixel que esta.
+            diferX = (distanX * j) - x;
+            diferY = (distanY * i) - y;
             # color azul
             blue =  ((a[2])&0xff)*(1-diferX)*(1-diferY) + ((b[2])&0xff)*(diferX)*(1-diferY) + ((c[2])&0xff)*(diferY)*(1-diferX) + ((d[2])&0xff)*(diferX*diferY)
 
@@ -67,7 +82,7 @@ def main():
     
     imag = Image.open("base.png")
     #TamaÃ±o de imagen tiene que estar en la misma escala que la original.
-    imag = imag.resize((10, 20), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
+    imag = imag.resize((200, 100), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
     imag.save("output1.jpg")
 
     
