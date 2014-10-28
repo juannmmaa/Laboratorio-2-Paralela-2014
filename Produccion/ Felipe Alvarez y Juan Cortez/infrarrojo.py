@@ -57,6 +57,7 @@ def cambiar_matiz(arr, grado_matiz):
 
 def main():
     #Asignamos un grado de matiz para resaltar colores
+    starting_point=time.time()
     matiz=190
     img = Image.open('imagen1.jpg')
     imgtocada=retoquecolor(img)
@@ -64,4 +65,8 @@ def main():
     imgblanc= blanquear(imgcolor)
     imgfinal= tonos(imgblanc)
     imgfinal.save("final.png")
+    elapsed_time=time.time()-starting_point
+    print" "
+    print "tiempo serial en segundos= " + str(elapsed_time)
+    
 main()
