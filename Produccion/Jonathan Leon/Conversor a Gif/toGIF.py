@@ -13,7 +13,7 @@ import time
 
 def toGif(fp,delay,output):
   #el delay representa la pausa entre una imagen y otra y loop 0 especifica que el gif se repite en un bucle. *jpg tomara todos los archivos *jpg (para este caso, puede ser cualquier formato de imagen)
-  system('convert -delay %d -loop 0 %s %s ' % (delay,filepath,nombreSalida))
+  system('convert -delay %d -loop 0 %s %s ' % (delay,fp,output))
 
 def main():
   starting_point=time.time()
