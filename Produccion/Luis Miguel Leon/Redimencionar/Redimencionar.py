@@ -23,8 +23,7 @@ def redimencionarImg(img,img2):
 
 
     print "*********************"
-    print arrImg[159][150]
-    print arrImg[99][150]
+  
     print "*********************"
     print distanX
     print distanY
@@ -33,25 +32,15 @@ def redimencionarImg(img,img2):
     for i in range(finAlto-1 ):
         for j in range(finalAncho-1 ):
             #Variables x y dependiendo de resolucion de salida.
-            print j
-            print i
+
             x = (distanX * j);
             y = (distanY * i);
-            print x
-            print y
-            print "22222222222222"
-            if(x>(ancho-2)):
-                x=x-2
-            if(y>(alto-2)):
-                y=y-2
+            
             #Tomo pixeles adyacentes, dependiendo de la resolucion que debo entregar.
-            a = arrImg[x][y] 
-            b = arrImg[x][y+1]
-            c = arrImg[x+1][y]
-            d = arrImg[x+1][y+1]
-
-
-
+            a = arrImg[y] [x]
+            b = arrImg[y+1][x]
+            c = arrImg[y][x+1]
+            d = arrImg[y+1][x+1]
 
 
 
@@ -82,11 +71,11 @@ def main():
     
     imag = Image.open("base.png")
     #TamaÃ±o de imagen tiene que estar en la misma escala que la original.
-    imag = imag.resize((200, 100), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
+    imag = imag.resize((500, 500), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
     imag.save("output1.jpg")
 
     
-    img=Image.open("salidaFinal.jpg")
+    img=Image.open("tatuajr.jpg")
     img2=Image.open("output1.jpg")
     
     imgRedimencionada=redimencionarImg(img,img2)
