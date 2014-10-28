@@ -2,6 +2,7 @@ __author__ = 'jonathan'
 
 
 import numpy as np
+import time
 from PIL import Image
 
 #Nivel de transparencia de imagen 1, para que queden igualmete mezcladas se debe usar un alfa=0.5
@@ -22,10 +23,14 @@ def sumarImagenes(img1,img2,alfa):
     return imgSuma
 
 def main():
+    starting_point=time.time()
     img1=Image.open("galaxia.jpg")
     img2=Image.open("barco.jpg")
     imagenSumada=sumarImagenes(img1,img2,ALFA)
     imagenSumada.save("resultado.jpg")
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 
 main()
 
