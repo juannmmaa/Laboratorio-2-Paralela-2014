@@ -3,6 +3,7 @@ __author__ = 'jonathan'
 
 import numpy as np
 from PIL import Image,ImageOps
+import time
 
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
@@ -26,10 +27,13 @@ def componerImagen(fondo,img,mascara):
     return imgCompuesta
 
 def main():
+    elapsed_time=time.time()-starting_point
     fondo=Image.open("galaxia.jpg")
     img=Image.open("barco.jpg")
     mascara=Image.open("alfaBarco.jpg")
     imagenCompuesta=componerImagen(fondo,img,mascara)
     imagenCompuesta.save("output.png")
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 
 main()
