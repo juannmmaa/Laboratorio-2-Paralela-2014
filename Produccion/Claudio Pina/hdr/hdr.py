@@ -42,7 +42,7 @@ def restabrillo(img1,img2):
 
 
 if __name__ == '__main__':
-	img1=Image.open("001.jpg")
+	img1=Image.open("orig_1.jpg")
 	oscura=aplicarBrillo(img1,oscuro)
 	oscura.save("oscuro.jpg")		#esta capa es innecesaria guardarla
 	clara=aplicarBrillo(img1,claro)

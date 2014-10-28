@@ -226,11 +226,3 @@ class hdr:
         else:
             val = [float(v) for v in val]
         return val
-
-    
-def main():
-
-    proj = hdr(case='img', resize=1, img_type='jpg', cur_dir='')
-   
-    proj.get_hdr(strength=[0.,1.,2.],naturalness=[0.8,0.9,1.0])
-main()

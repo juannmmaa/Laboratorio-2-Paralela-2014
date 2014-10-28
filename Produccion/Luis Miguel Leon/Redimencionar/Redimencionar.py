@@ -71,7 +71,7 @@ def main():
     
     imag = Image.open("base.png")
     #TamaÃ±o de imagen tiene que estar en la misma escala que la original.
-    imag = imag.resize((500, 500), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
+    imag = imag.resize((200, 100), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
     imag.save("output1.jpg")
 
     
