@@ -1,6 +1,7 @@
 import colorsys
 import numpy as np
 from PIL import Image, ImageEnhance
+import time
 
 # propiedades de NP para cambiar de modo RGB a HSV y viceversa
 rgb_to_hsv = np.vectorize(colorsys.rgb_to_hsv)
@@ -59,7 +60,7 @@ def main():
     #Asignamos un grado de matiz para resaltar colores
     starting_point=time.time()
     matiz=190
-    img = Image.open('imagen1.jpg')
+    img = Image.open('1.jpg')
     imgtocada=retoquecolor(img)
     imgcolor=color(imgtocada,matiz)
     imgblanc= blanquear(imgcolor)

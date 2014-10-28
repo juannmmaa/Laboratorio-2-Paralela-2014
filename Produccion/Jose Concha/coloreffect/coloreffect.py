@@ -1,6 +1,9 @@
 __author__ = 'jose'
 import numpy as np
 from PIL import Image
+import time
+
+
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 def convertirImgColor(img):
@@ -13,8 +16,12 @@ def convertirImgColor(img):
     imgColor = Image.fromarray(arrImg)
     return  imgColor
 def main():
+    starting_point=time.time()
     img = Image.open('Lenna.png')
     imgColor = convertirImgColor(img)
     imgColor.save('LennaColor.png')
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 
 main()

@@ -4,6 +4,8 @@ __author__ = 'jose'
 import numpy as np
 from PIL import Image
 import math
+import time
+
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 def filtroLinealS(arrImg):
@@ -66,11 +68,27 @@ def convolucionImg(img, caso = 0):
     convImg = Image.fromarray(arrAux)
     return convImg
 def main():
+    ini_point=time.time()
+    starting_point=time.time()
     img = Image.open('Lenna.png')
     convImg = convolucionImg(img)
     convImg.save('conv0.png')
+    elapsed_time=time.time()-starting_point
+    print "Convolucion 0 - Time [seconds]: " + str(elapsed_time)
+
+    starting_point=time.time()
     convImg = convolucionImg(img,1)
     convImg.save('conv1.png')
+    elapsed_time=time.time()-starting_point
+    print "Convolucion 1 -  Time [seconds]: " + str(elapsed_time)
+
+    starting_point=time.time()
     convImg = convolucionImg(img,2)
     convImg.save('conv2.png')
+    elapsed_time=time.time()-starting_point
+    print "Convolucion 2 -  Time [seconds]: " + str(elapsed_time)
+
+    elapsed_time=time.time()-ini_point
+    print ""
+    print "Convolucion Total -  Time [seconds]: " + str(elapsed_time)
 main()

@@ -1,6 +1,7 @@
 __author__ = 'jose'
 from PIL import Image
 import numpy as np
+import time
 
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
@@ -30,7 +31,11 @@ def filtroLineal(img):
     linealImg = Image.fromarray(arrAux)
     return linealImg
 def main():
+    starting_point=time.time()
     img = Image.open('Lenna.png')
     convImg = filtroLineal(img)
     convImg.save('nlLenna.png')
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 main()

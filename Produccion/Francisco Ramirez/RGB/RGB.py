@@ -24,10 +24,13 @@ def mezclarRGB(img,r,g,b):
 
 def main():
     starting_point=time.time()
-    img=Image.open("8K.jpg")
-    r=50
-    g=160
-    b=320
+    img=Image.open("1.jpg")
+
+    #r,g,b componentes del color a mezclar en decimales
+    # 255,0,0 rojo
+    r=255
+    g=0
+    b=0
     imgRGB=mezclarRGB(img,r,g,b)
     imgRGB.save("output.png")    #guarda la imagen RGB
     elapsed_time=time.time()-starting_point

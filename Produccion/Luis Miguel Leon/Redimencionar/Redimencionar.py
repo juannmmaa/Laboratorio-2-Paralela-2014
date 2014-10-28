@@ -2,6 +2,7 @@
 __author__ = 'Luis Miguel leon'
 import numpy as np
 from PIL import Image
+import time
 
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
@@ -68,10 +69,10 @@ def redimencionarImg(img,img2):
     return imgRedimencionada
 
 def main():
-    
+    starting_point=time.time()
     imag = Image.open("base.png")
-    #TamaÃ±o de imagen tiene que estar en la misma escala que la original.
-    imag = imag.resize((200, 100), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaÃ±o de la final de la imagen redimencionada.
+    #Tamaño de imagen tiene que estar en la misma escala que la original.
+    imag = imag.resize((200, 100), Image.ANTIALIAS)#para crear una imagen en blanco con la cual obtengo el tamaño de la final de la imagen redimencionada.
     imag.save("output1.jpg")
 
     
@@ -82,6 +83,9 @@ def main():
     imgRedimencionada.save("salidaFinal2.jpg")
     #saludo = raw_input("Escribe lo que sea")
     #print saludo
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 main()
 
 

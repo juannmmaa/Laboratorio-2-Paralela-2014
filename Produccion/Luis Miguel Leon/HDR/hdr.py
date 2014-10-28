@@ -2,6 +2,8 @@ from PIL import Image
 import os, os.path
 import sys, string
 from copy import copy
+import time
+
 try:
     import pylab
     pylab_loaded = 1
@@ -230,7 +232,11 @@ class hdr:
     
 def main():
 
+    starting_point=time.time()
     proj = hdr(case='img', resize=1, img_type='jpg', cur_dir='')
    
     proj.get_hdr(strength=[0.,1.,2.],naturalness=[0.8,0.9,1.0])
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 main()

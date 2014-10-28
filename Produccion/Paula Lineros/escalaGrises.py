@@ -21,7 +21,7 @@ def escalaGrises(img):
  
 def main():
     starting_point=time.time() #Donde quiere empezar a calcular el tiempo
-    img=Image.open("imagennormal.png") #abre imagen
+    img=Image.open("1.jpg") #abre imagen
     imgGris = escalaGrises(img)
     imgGris.save("imagenescaladegris.png") #guarda la imagen en escala de grises
     elapsed_time=time.time()-starting_point #calculo

@@ -9,7 +9,7 @@ def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 
 #Genera un valor entre 0 y 1 a partir de un pixel en escala de grises
-#Mientras mas alto sea , el valor devuelto será mas cercano a 1 (opacidad maxima)
+#Mientras mas alto sea , el valor devuelto sera mas cercano a 1 (opacidad maxima)
 def obtenerAlfa(pixel):
     return pixel[0]/255
 
@@ -27,12 +27,13 @@ def componerImagen(fondo,img,mascara):
     return imgCompuesta
 
 def main():
-    elapsed_time=time.time()-starting_point
+    starting_point=time.time()
     fondo=Image.open("galaxia.jpg")
     img=Image.open("barco.jpg")
     mascara=Image.open("alfaBarco.jpg")
     imagenCompuesta=componerImagen(fondo,img,mascara)
     imagenCompuesta.save("output.png")
+    elapsed_time=time.time()-starting_point
     print ""
     print "Serial Time [seconds]: " + str(elapsed_time)
 

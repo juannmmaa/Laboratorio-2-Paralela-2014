@@ -3,6 +3,7 @@ __author__ = 'juank'
 import numpy as np
 from PIL import Image
 from PIL import ImageEnhance
+import time
 
 # convierte una imagen tipo Imagen (de la libreria PIL) en una matriz(ETD) con la informacion RGB de la imagen
 def convertirImgMatrixRGB(img):
@@ -27,6 +28,7 @@ def PasarDiaNoche(img):
     imgNoche = nitidez.enhance(2) #asigna un valor para la nitidez de la imagen
     return imgNoche
 def main():
+    starting_point=time.time()
     """las siguientes dos lineas corresponden al nombre del archivo y la extension con el fin de
     nombrar el archivo de salida como <nombreArchivo>Noche.<extension>
     ejemplo: paisaje.jpg -> paisajeNoche.jpg"""
@@ -36,6 +38,9 @@ def main():
     arrImg = convertirImgMatrixRGB(img)
     imgNoche=PasarDiaNoche(img)
     imgNoche.save(nombreImg+"Noche"+extension)
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
     imgNoche.show()
 
 main()

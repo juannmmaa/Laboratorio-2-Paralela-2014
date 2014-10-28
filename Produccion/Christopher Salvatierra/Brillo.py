@@ -5,6 +5,7 @@ __author__ = 'Christopher Salvatierra L.'
 import numpy as np
 from PIL import Image
 from PIL import ImageEnhance
+import time #Libreria
 
 # convierte una imagen tipo Imagen (de la libreria PIL) en una matriz(ETD) con la informacion RGB de la imagen
 def convertirImgMatrixRGB(img):
@@ -31,19 +32,21 @@ def aplicarBrillo(img,factor):
 
 def main():
 
-    img=Image.open("imagenMuestra2.jpg")
 
     #aplicar brillo
     print"Ingrese factor(se debe ingresar valor decimal entre -1 y 0 para oscurecer y entre 0 y 1 para aclarar)"
+
+
     factor=input()
+    img=Image.open("1.jpg")
+    starting_point=time.time() #Donde quiere empezar a calcular el tiempo
     imgBrillo = aplicarBrillo(img,factor)
     imgBrillo.save("resultado1.jpg")
+    elapsed_time=time.time()-starting_point #calculo
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time) #segundos
     imgBrillo.show()
 
 
 import time #Libreria
-starting_point=time.time() #Donde quiere empezar a calcular el tiempo
 main() #donde realiza las acciones para el brillo
-elapsed_time=time.time()-starting_point #calculo
-print ""
-print "Serial Time [seconds]: " + str(elapsed_time) #segundos

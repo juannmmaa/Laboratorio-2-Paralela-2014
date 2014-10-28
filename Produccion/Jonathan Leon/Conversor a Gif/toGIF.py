@@ -25,4 +25,6 @@ def main():
   print ""
   print "Serial Time [seconds]: " + str(elapsed_time)
 
+main()
+
 

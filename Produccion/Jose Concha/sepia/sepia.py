@@ -2,6 +2,7 @@ __author__ = 'jose'
 import numpy as np
 from PIL import Image
 import colorsys
+import time
 
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
@@ -33,8 +34,12 @@ def convertirImgSepiaV2(img):
     imgSepia = Image.fromarray(arrImg)
     return imgSepia
 def main():
+    starting_point=time.time()
     img = Image.open('Lenna.png')
     imgSepia = convertirImgSepiaV2(img)
     imgSepia.save('LennaSepia.png')
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 
 main()

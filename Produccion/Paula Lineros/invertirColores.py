@@ -26,7 +26,7 @@ def invertirImgColores(img): # al parecer es la misma que el negativo
 
 def main():
     starting_point=time.time() #Donde quiere empezar a calcular el tiempo
-    img=Image.open("imagennormal.png") #abre imagen
+    img=Image.open("1.jpg") #abre imagen
     imgColor=invertirImgColores(img)
     imgColor.save("imageninvertida.png") #guarda la imagen con colores invertidos
     elapsed_time=time.time()-starting_point #calculo

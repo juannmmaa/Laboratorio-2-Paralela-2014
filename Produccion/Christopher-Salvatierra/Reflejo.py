@@ -5,6 +5,7 @@ __author__ = 'Christopher Salvatierra L.'
 import numpy as np
 from PIL import Image
 from PIL import ImageEnhance
+import time #Libreria
 
 # convierte una imagen tipo Imagen (de la libreria PIL) en una matriz(ETD) con la informacion RGB de la imagen
 def convertirImgMatrixRGB(img):
@@ -23,13 +24,15 @@ def aplicarReflejo(img):
     return imgInvertida
 
 def main():
-    img=Image.open("imagenMuestra2.jpg")
+    starting_point=time.time() #Donde quiere empezar a calcular el tiempo
+    img=Image.open("1.jpg")
     imgReflejo = aplicarReflejo(img)
     imgReflejo.save("reflejo.jpg")
+    elapsed_time=time.time()-starting_point #calculo
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time) #segundos
 
-import time #Libreria
-starting_point=time.time() #Donde quiere empezar a calcular el tiempo
+
+
 main()
-elapsed_time=time.time()-starting_point #calculo
-print ""
-print "Serial Time [seconds]: " + str(elapsed_time) #segundos
+
