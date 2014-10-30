@@ -1,5 +1,6 @@
 from __future__ import division 
 __author__ = 'jonathan'
+# -*- coding: utf-8 -*-
 
 import numpy as np
 from PIL import Image,ImageOps
@@ -14,7 +15,11 @@ def obtenerAlfa(pixel):
     return pixel[0]/255
 
 #Pega una imagen encima de un fondo, usando una mascara para generar las zonas transparentes de esta.
-def componerImagen(fondo,img,mascara):
+def componerImagen(fpFondo,fpImg,fpMascara):
+
+    fondo=Image.open(fpFondo)  #el fondo manda, no lo tocamos por nada
+    img=Image.open(fpImg).resize(fondo.size)#redimensionamos la imagen que pegaremos
+    mascara=Image.open(fpMascara).resize(fondo.size)# y la respectiva mascara.
     arrFondo=convertirImgMatrixRGB(fondo)
     arrImg=convertirImgMatrixRGB(img)
     arrMascara=convertirImgMatrixRGB(mascara)
@@ -28,10 +33,7 @@ def componerImagen(fondo,img,mascara):
 
 def main():
     starting_point=time.time()
-    fondo=Image.open("galaxia.jpg")
-    img=Image.open("barco.jpg")
-    mascara=Image.open("alfaBarco.jpg")
-    imagenCompuesta=componerImagen(fondo,img,mascara)
+    imagenCompuesta=componerImagen("galaxia.jpg","barco.jpg","alfaBarco.jpg")
     imagenCompuesta.save("output.png")
     elapsed_time=time.time()-starting_point
     print ""
