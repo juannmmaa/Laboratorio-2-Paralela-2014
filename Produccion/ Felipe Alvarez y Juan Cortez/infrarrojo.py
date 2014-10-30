@@ -16,7 +16,7 @@ def retoquecolor(img):
 	for i in range(img.size[0]):
 		for j in range(img.size[1]):
 			r, g, b = img.getpixel((i, j))
-			img.putpixel((i, j), ((r+220)/3, (r+g+b+70)/3, (r+g+b+90)/3))
+			img.putpixel((i, j), ((r+230)/3, (r+g+150)/3, (r+g+b+70)/3))
 	return img
 
 
@@ -25,7 +25,7 @@ def blanquear(img):
 	arrImg = convertirImgMatrixRGB(img)
 	for i in range(img.size[1]):
 		for j in range(img.size[0]):
-			if(arrImg[i][j][1]>240 and arrImg[i][j][0]<30 and arrImg[i][j][2]<30):
+			if(arrImg[i][j][1]>240 and arrImg[i][j][0]<80 and arrImg[i][j][2]<80):
 				arrImg[i][j][0] =255
 				arrImg[i][j][1] =255
 				arrImg[i][j][2] =255
@@ -59,7 +59,7 @@ def cambiar_matiz(arr, grado_matiz):
 def main():
     #Asignamos un grado de matiz para resaltar colores
     starting_point=time.time()
-    matiz=190
+    matiz=205
     img = Image.open('1.jpg')
     imgtocada=retoquecolor(img)
     imgcolor=color(imgtocada,matiz)
