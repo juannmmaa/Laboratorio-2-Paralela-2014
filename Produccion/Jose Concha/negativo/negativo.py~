@@ -1,6 +1,8 @@
 __author__ = 'jose'
 import numpy as np
 from PIL import Image
+import time
+inicio = time.time()
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 def convertirImgNegativo(img):
@@ -11,7 +13,13 @@ def convertirImgNegativo(img):
     imgNegativo = Image.fromarray(arrImg)
     return imgNegativo
 def main():
+    starting_point=time.time()
     img = Image.open('Lenna.png')
     imgNegativo = convertirImgNegativo(img)
     imgNegativo.save('LennaNegativo.png')
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
 main()
+final = time.time()-inicio
+print "Serial time [seconds] = " +str(final)
