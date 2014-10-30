@@ -102,10 +102,15 @@ def main():
     img = Image.open('Lenna.png')
     convImg = convolucionImg(img)
     convImg.save('conv0.png')
+    print "Convolution 1 = "+str(time.time()-inicio)
+    ini = time.time()
     convImg = convolucionImg(img,1)
     convImg.save('conv1.png')
+    print "Convolution 2 = "+str(time.time()-ini)
+    ini = time.time()
     convImg= convolucionImg(img,2)
     convImg.save('conv2.png')
+    print "Convolution 3 = "+str(time.time()-ini)
 
 main()
 
