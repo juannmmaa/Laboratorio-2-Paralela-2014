@@ -30,23 +30,23 @@ size = comm.size     # cantidad de procesadores a usar
 # En esta funcion se mandara a cada procesador la cantidad de datos con la que trabajaran
 # Si sobran datos para que sean parejos, se le asignara al ultimo procesador
 def distribuirEnP(size,base,altura):
-    if (rank==0):
-        cuoc= (base*altura)/size #c : cuociente
-        rest= (base*altura)%size #r : resto
-        conta=0
-        for p in range (size):
-            if (p+1)!=size:
-                conta=conta+cuoc
-                comm.send (conta, dest = p)
+    if (rank == 0):
+        cuoc = (base*altura) / (size-2) #c : cuociente
+        rest = (base*altura) % (size-2) #r : resto
+        conta = 0
+        for p in range(size-2):
+            if (p+1) != (size-2):
+                conta = conta + cuoc
+                comm.send(conta, dest = p+2)
             else:
-                conta=conta+cuoc+rest
-                comm.send (conta, dest = p)
+                conta = conta+cuoc+rest
+                comm.send(conta, dest = p+2)
 
 # El procesador 0 recibirá las cantidad de datos con la que trabajará
 # cada procesador para devolver los indice i y j hasta donde operará
-def buscarRangoFinal(size,base,altura):
-    if rank==0:
-        p=0
+def buscarRangoFinal(base,altura):
+    if rank==2:
+        p=2
         conta=0
         rangos_end=[]
         valor=0
@@ -75,49 +75,48 @@ data = Image.open("0,3 megapixeles 1.jpg")
 data=convertirImgMatrixRGB(data)
 altura = data.shape[0]
 base = data.shape[1]
-if rank ==0:
-    print "altura,base: ",altura,base
-    #print data
 # El procesador 0 estará a cargo de mandar la cantidad de datos
 # para cada procesador
 if rank == 0:
+    print "altura,base: ",altura,base
     distribuirEnP(size,base,altura)
 
-# Recibe la cantidad de datos en cada procesador
-rango = comm.recv(source=0)
-rango = rango-1
-comm.send(rango, dest=0)
-#print "rank ",rank,", cantidad :",rango
+if rank >= 2:
+    # Recibe la cantidad de datos en cada procesador
+    rango = comm.recv(source=0)
+    rango = rango - 1
+    comm.send(rango, dest=2)
+    #print "rank ", rank, ", cantidad :",rango
 
 # Con la cantidad de datos se buscara el rango donde terminara de procesar en la matriz
-if rank == 0:
-    buscarRangoFinal(size, base, altura)
+if rank == 2:
+    buscarRangoFinal(base, altura)
 
 # Con la posición de termino se mandarán como punto de inicio para los procesadores siguientes
 # Primero se inicia el procesador 1
-fin = comm.recv(source=0)
-#print "rank ",rank,", fin : ",fin
-if size != 1:
-    if rank==0:
+if rank >= 2:
+    fin = comm.recv(source=2)
+    #print "rank ",rank,", fin : ",fin
+    if size != 3:
+        if rank == 2:
+            ini = [0, 0]
+            i = 1
+            if size > 0:
+                comm.send(fin, dest=3)
+    else:
         ini=[0,0]
-        i=1
-        if size>0:
-            comm.send(fin,dest=1)
-else:
-    ini=[0,0]
-    comm.send(fin,dest=0)
+        comm.send(fin,dest=2)
+    # Hasta los p procesadores
+    if size != 3:
+        if rank !=2:
+            ini=comm.recv(source=rank-1)
+            if (rank+1)<size:
+                comm.send(fin,dest=rank+1)
+    else:
+        ini=comm.recv(source=2)
+    print "rank ",rank,", rango :",ini,fin
 
-# Hasta los p procesadores
-if size != 1:
-    if rank !=0:
-        ini=comm.recv(source=rank-1)
-        if (rank+1)<size:
-            comm.send(fin,dest=rank+1)
-else:
-    ini=comm.recv(source=0)
-print "rank ",rank,", rango :",ini,fin
-
-if rank ==0:
+if rank ==2:
 #    Calculo de tiempo
     elapsed_time=time.time()-starting_point
     elapsed_time_int = int(elapsed_time)
