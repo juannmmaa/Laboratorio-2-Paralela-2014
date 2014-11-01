@@ -78,51 +78,37 @@ base = data.shape[1]
 # El procesador 0 estará a cargo de mandar la cantidad de datos
 # para cada procesador
 if rank == 0:
+    print ""
     print "altura,base: ",altura,base
     distribuirEnP(size,altura)
 
 if rank >= 2:
     # Recibe la cantidad de datos en cada procesador
-    rango = comm.recv(source=0)
-    rango = rango - 1
-    comm.send(rango, dest=2)
-    print "rank ", rank, ", cantidad :",rango
+    fin = comm.recv(source=0)
+    fin = fin - 1
 
-# # Con la cantidad de datos se buscara el rango donde terminara de procesar en la matriz
-# if rank == 2:
-#     buscarRangoFinal(base, altura)
-#
-# # Con la posición de termino se mandarán como punto de inicio para los procesadores siguientes
-# # Primero se inicia el procesador 1
-# if rank >= 2:
-#     fin = comm.recv(source=2)
-#     #print "rank ",rank,", fin : ",fin
-#     if size != 3:
-#         if rank == 2:
-#             ini = [0, 0]
-#             i = 1
-#             if size > 0:
-#                 comm.send(fin, dest=3)
-#     else:
-#         ini=[0,0]
-#         comm.send(fin,dest=2)
-#     # Hasta los p procesadores
-#     if size != 3:
-#         if rank !=2:
-#             ini=comm.recv(source=rank-1)
-#             if (rank+1)<size:
-#                 comm.send(fin,dest=rank+1)
-#     else:
-#         ini=comm.recv(source=2)
-#     print "rank ",rank,", rango :",ini,fin
+    if size != 3:
+        if rank == 2:
+            ini = 0
+            i = 1
+            if size > 0:
+                comm.send(fin, dest=3)
+    else:
+        ini=0
+        comm.send(fin,dest=2)
+    # Hasta los p procesadores
+    if size != 3:
+        if rank !=2:
+            ini=comm.recv(source=rank-1)
+            if (rank+1)<size:
+                comm.send(fin,dest=rank+1)
+    else:
+        ini=comm.recv(source=2)
+    print "rank ",rank,", ini,fin :",ini,",",fin
 
 if rank ==2:
 #    Calculo de tiempo
     elapsed_time=time.time()-starting_point
     elapsed_time_int = int(elapsed_time)
-    print ""
     print "Parallel Time [seconds]: " + str(elapsed_time)
-#    elapsed_time_minutes = elapsed_time_int/60
-#    elapsed_time_seconds = elapsed_time_int%60
-#    print "Time [min:sec]: "+ str(elapsed_time_minutes) + ":" + str(elapsed_time_seconds)
-
+    print ""
