@@ -29,10 +29,10 @@ size = comm.size     # cantidad de procesadores a usar
 
 # En esta funcion se mandara a cada procesador la cantidad de datos con la que trabajaran
 # Si sobran datos para que sean parejos, se le asignara al ultimo procesador
-def distribuirEnP(size,base,altura):
+def distribuirEnP(size,altura):
     if (rank == 0):
-        cuoc = (base*altura) / (size-2) #c : cuociente
-        rest = (base*altura) % (size-2) #r : resto
+        cuoc = (altura) / (size-2) #c : cuociente
+        rest = (altura) % (size-2) #r : resto
         conta = 0
         for p in range(size-2):
             if (p+1) != (size-2):
@@ -79,42 +79,42 @@ base = data.shape[1]
 # para cada procesador
 if rank == 0:
     print "altura,base: ",altura,base
-    distribuirEnP(size,base,altura)
+    distribuirEnP(size,altura)
 
 if rank >= 2:
     # Recibe la cantidad de datos en cada procesador
     rango = comm.recv(source=0)
     rango = rango - 1
     comm.send(rango, dest=2)
-    #print "rank ", rank, ", cantidad :",rango
+    print "rank ", rank, ", cantidad :",rango
 
-# Con la cantidad de datos se buscara el rango donde terminara de procesar en la matriz
-if rank == 2:
-    buscarRangoFinal(base, altura)
-
-# Con la posición de termino se mandarán como punto de inicio para los procesadores siguientes
-# Primero se inicia el procesador 1
-if rank >= 2:
-    fin = comm.recv(source=2)
-    #print "rank ",rank,", fin : ",fin
-    if size != 3:
-        if rank == 2:
-            ini = [0, 0]
-            i = 1
-            if size > 0:
-                comm.send(fin, dest=3)
-    else:
-        ini=[0,0]
-        comm.send(fin,dest=2)
-    # Hasta los p procesadores
-    if size != 3:
-        if rank !=2:
-            ini=comm.recv(source=rank-1)
-            if (rank+1)<size:
-                comm.send(fin,dest=rank+1)
-    else:
-        ini=comm.recv(source=2)
-    print "rank ",rank,", rango :",ini,fin
+# # Con la cantidad de datos se buscara el rango donde terminara de procesar en la matriz
+# if rank == 2:
+#     buscarRangoFinal(base, altura)
+#
+# # Con la posición de termino se mandarán como punto de inicio para los procesadores siguientes
+# # Primero se inicia el procesador 1
+# if rank >= 2:
+#     fin = comm.recv(source=2)
+#     #print "rank ",rank,", fin : ",fin
+#     if size != 3:
+#         if rank == 2:
+#             ini = [0, 0]
+#             i = 1
+#             if size > 0:
+#                 comm.send(fin, dest=3)
+#     else:
+#         ini=[0,0]
+#         comm.send(fin,dest=2)
+#     # Hasta los p procesadores
+#     if size != 3:
+#         if rank !=2:
+#             ini=comm.recv(source=rank-1)
+#             if (rank+1)<size:
+#                 comm.send(fin,dest=rank+1)
+#     else:
+#         ini=comm.recv(source=2)
+#     print "rank ",rank,", rango :",ini,fin
 
 if rank ==2:
 #    Calculo de tiempo
