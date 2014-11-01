@@ -86,7 +86,7 @@ if rank >= 2:
     # Recibe la cantidad de datos en cada procesador
     fin = comm.recv(source=0)
     fin = fin - 1
-
+    #envia los datos con que finalizan al siguiente procesador para que lo usen como inicio
     if size != 3:
         if rank == 2:
             ini = 0
