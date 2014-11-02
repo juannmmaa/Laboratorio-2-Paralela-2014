@@ -68,10 +68,10 @@ def buscarRangoFinal(base,altura):
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 
-def cortarImagen(x, y):
+def cortarImagen(x, y, base):
     #print "hol"
-    im = Image.open('output.png')
-    region = im.crop((0, x, 632, y))
+    im = Image.open('4k.jpg')
+    region = im.crop((0, x, base, y))
     region.save("new"+str(rank)+".jpg")
     data= np.array(region.convert("RGB"))
 
@@ -90,7 +90,7 @@ def unirImagen():
 #-------------MAIN---------------------
 
 # Se sobre entiende que los delimitadores son espacios
-data = Image.open("1.jpg")
+data = Image.open("4k.jpg")
 data=convertirImgMatrixRGB(data)
 altura = data.shape[0]
 base = data.shape[1]
@@ -124,9 +124,18 @@ if rank >= 2:
     else:
         ini=comm.recv(source=2)
     print "rank ",rank,", ini,fin :",ini,",",fin
-    cortarImagen(ini,fin)
+    cortarImagen(ini,fin,base)
 if rank==2:
-    unirImagen()
+    #intentaremos unir las imagenes, se usa una secuencia try catch porque puede suceder que intentemos
+    #unir imagenes que aun no esten listas, para que el programa no se caiga, lo volvemos a intentar
+    #hasta que salga bien
+    exito=0
+    while exito==0:
+        try:
+            unirImagen()
+            exito=1
+        except:
+            print "imagenes aun no listas, reintentando..."
 
 # if rank ==2:
 # #    Calculo de tiempo
