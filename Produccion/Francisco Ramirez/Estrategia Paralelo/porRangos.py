@@ -71,7 +71,7 @@ def convertirImgMatrixRGB(img):
 #-------------MAIN---------------------
 
 # Se sobre entiende que los delimitadores son espacios
-data = Image.open("0,3 megapixeles 1.jpg")
+data = Image.open("2,1 megapixeles 2.jpg")
 data=convertirImgMatrixRGB(data)
 altura = data.shape[0]
 base = data.shape[1]
