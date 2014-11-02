@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>PHOTOSHAKE</title>
+	<script type="text/javascript" src="js/jquery.1.11.1.js"></script>
+	<script type="text/javascript" src="js/jquery.nstSlider.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<link href='fonts/fonts.css' rel='stylesheet' type='text/css' />
+	<link type="text/css" rel="stylesheet" href="js/jquery.nstSlider.css" />
+	<link href="style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+	<div id="logo-grande">
+		<img src="logo.png" width="100" height="100" />PHOTOSHAKE
+	</div>
+	<div id="home">
+		<a id="btn-serial" href="javascript:void(0);" onClick="clickPaso2('serial');">SERIAL</a>
+		<a id="btn-paralelo" href="javascript:void(0);" onClick="clickPaso2('paralelo');">PARALELO</a>
+	</div>
+	<form id="contenido" style="display:none;" action="save.php" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="tipo" value="" />
+		<div id="filtros">
+			<a id="filtro1" class="filtro" href="javascript:void(0);" onClick="clickFiltro(1);">FILTRO 1</a>
+			<a id="filtro2" class="filtro" href="javascript:void(0);" onClick="clickFiltro(2);">FILTRO 2</a>
+			<a id="filtro3" class="filtro" href="javascript:void(0);" onClick="clickFiltro(3);">FILTRO 3</a>
+			<a id="filtro4" class="filtro" href="javascript:void(0);" onClick="clickFiltro(4);">FILTRO 4</a>
+		</div>
+		<input type="hidden" name="filtro" value="" />
+		<div id="subefoto">
+			<div id="subefoto-over">ELIGE FOTO</div>
+			<input type="file" name="foto" />
+		</div>
+		<div id="tono">
+			<p>TONOS</p>
+			<div class="nstSlider" id="red" data-range_min="0" data-range_max="255" data-cur_min="255" data-cur_max="0">
+				<div class="bar"></div>
+				<div class="leftGrip"></div>
+			</div>
+			<div class="leftLabelR"></div>
+			<input type="hidden" name="tonoR" value="" />
+
+			<div class="nstSlider" id="green" data-range_min="0" data-range_max="255" data-cur_min="255" data-cur_max="0">
+				<div class="bar"></div>
+				<div class="leftGrip"></div>
+			</div>
+			<div class="leftLabelG"></div>
+			<input type="hidden" name="tonoG" value="" />
+
+			<div class="nstSlider" id="blue" data-range_min="0" data-range_max="255" data-cur_min="255" data-cur_max="0">
+				<div class="bar"></div>
+				<div class="leftGrip"></div>
+			</div>
+			<div class="leftLabelB"></div>
+			<input type="hidden" name="tonoB" value="" />
+		</div>
+		<div id="proces" style="display:none;">
+			<input type="hidden" name="proces" value="" />
+			<p>PROCESADORES</p>
+			<div class="nstSlider" id="rango-proces" data-range_min="3" data-range_max="122" data-cur_min="61" data-cur_max="3">
+				<div class="bar"></div>
+				<div class="leftGrip"></div>
+			</div>
+			<div class="labelProces"></div>
+		</div>
+		<input id="finform" type="submit" value="ENVIAR" />
+	</form>
+</body>
+</html>
