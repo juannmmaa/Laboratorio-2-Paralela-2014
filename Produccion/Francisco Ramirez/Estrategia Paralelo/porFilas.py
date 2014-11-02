@@ -68,10 +68,29 @@ def buscarRangoFinal(base,altura):
 def convertirImgMatrixRGB(img):
     return np.array(img.convert("RGB"))
 
+def cortarImagen(x, y):
+    #print "hol"
+    im = Image.open('output.png')
+    region = im.crop((0, x, 632, y))
+    region.save("new"+str(rank)+".jpg")
+    data= np.array(region.convert("RGB"))
+
+def unirImagen():
+    im1 = Image.open('new'+str(rank)+'.jpg')
+    im1 = np.array(im1.convert("RGB"))
+    for i in range(3, size):
+        im2 = Image.open('new'+str(i)+'.jpg')
+        im2 = np.array(im2.convert("RGB"))
+        im1=np.vstack((im1, im2))
+    im1=Image.fromarray(im1)
+    im1.save("end.png")
+
+
+
 #-------------MAIN---------------------
 
 # Se sobre entiende que los delimitadores son espacios
-data = Image.open("0,3 megapixeles 1.jpg")
+data = Image.open("1.jpg")
 data=convertirImgMatrixRGB(data)
 altura = data.shape[0]
 base = data.shape[1]
@@ -85,7 +104,7 @@ if rank == 0:
 if rank >= 2:
     # Recibe la cantidad de datos en cada procesador
     fin = comm.recv(source=0)
-    fin = fin - 1
+    #fin = fin - 1
     #envia los datos con que finalizan al siguiente procesador para que lo usen como inicio
     if size != 3:
         if rank == 2:
@@ -105,10 +124,13 @@ if rank >= 2:
     else:
         ini=comm.recv(source=2)
     print "rank ",rank,", ini,fin :",ini,",",fin
+    cortarImagen(ini,fin)
+if rank==2:
+    unirImagen()
 
-if rank ==2:
-#    Calculo de tiempo
-    elapsed_time=time.time()-starting_point
-    elapsed_time_int = int(elapsed_time)
-    print "Parallel Time [seconds]: " + str(elapsed_time)
-    print ""
+# if rank ==2:
+# #    Calculo de tiempo
+#     elapsed_time=time.time()-starting_point
+#     elapsed_time_int = int(elapsed_time)
+#     print "Parallel Time [seconds]: " + str(elapsed_time)
+#     print ""
