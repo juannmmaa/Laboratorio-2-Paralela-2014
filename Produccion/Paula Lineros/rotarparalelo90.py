@@ -23,12 +23,6 @@ def rotar90(img):
             final[i][j] = img[::, ((i*-1)-1)][j]
     return final
 
-def rotar180(img):
-    return rotar90(rotar90(img)) #debido a que el algoritmo de cambio de posicion es el mismo
-
-def rotar270(img):
-    return rotar180(rotar90(img))
-
 def divisionTareaImagen(ruta):
     img = Image.open(ruta)
     imgSize = img.size
