@@ -32,7 +32,11 @@ def main():
     """las siguientes dos lineas corresponden al nombre del archivo y la extension con el fin de
     nombrar el archivo de salida como <nombreArchivo>Noche.<extension>
     ejemplo: paisaje.jpg -> paisajeNoche.jpg"""
-    nombreImg = "paisaje2"
+<<<<<<< Updated upstream
+    nombreImg = "paisaje"
+=======
+    nombreImg = "21"
+>>>>>>> Stashed changes
     extension = ".jpg"
     img=Image.open(nombreImg + extension)
     arrImg = convertirImgMatrixRGB(img)

@@ -23,7 +23,7 @@ def main():
     starting_point=time.time() #Donde quiere empezar a calcular el tiempo
     img=Image.open("1.jpg") #abre imagen
     imgGris = escalaGrises(img)
-    imgGris.save("imagenescaladegris.png") #guarda la imagen en escala de grises
+    imgGris.save("imagenescaladegrispng") #guarda la imagen en escala de grises
     elapsed_time=time.time()-starting_point #calculo
     print ""
     print "Serial Time [seconds]: " + str(elapsed_time) #segundos

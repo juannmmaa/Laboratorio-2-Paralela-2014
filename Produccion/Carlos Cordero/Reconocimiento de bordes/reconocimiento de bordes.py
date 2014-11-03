@@ -144,7 +144,7 @@ def main():
     """funcion principal
     """
     starting_point=time.time() #Donde quiere empezar a calcular el tiempo
-    imagen_original = Image.open('imagenCache.JPG')
+    imagen_original = Image.open('03.jpg')
     magen_original = imagen_original.convert('RGB')
 
     imagen_gris = hacer_gris(imagen_original)
@@ -154,13 +154,13 @@ def main():
     mascara3 = [[1,1,1],[-1,-2,1],[-1,-1,1]]
     mascara4 = [[-1,1,1],[-1,-2,1],[-1,1,1]]
     nueva = convolucion(nueva, mascara1)
-    nueva.save("mascara1.png")
+    nueva.save("031.png")
     nueva = convolucion(nueva, mascara2)
-    nueva.save("mascara2.png")
+    nueva.save("032.png")
     nueva = convolucion(nueva, mascara3)
-    nueva.save("mascara3.png")
+    nueva.save("033.png")
     nueva = convolucion(nueva, mascara4)
-    nueva.save("mascara4.png")
+    nueva.save("034.png")
     nueva = hacer_difusa(nueva)
     nueva = umbral(nueva)
     elapsed_time=time.time()-starting_point #calculo
