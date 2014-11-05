@@ -73,7 +73,7 @@ if __name__ == '__main__':
             alfa=float(sys.argv[3])  #ciclo try catch para obtener el valor alfa en formato flotante
        except ValueError:
             print "Valor alfa no reconocido (%s), usando valor por defecto :0.5" % sys.argv[3]
-            alfa=0.4                 #si el usuario no ingresa cualquier cosa, tomo el alfa por defecto=.5
+            alfa=0.5                 #si el usuario no ingresa cualquier cosa, tomo el alfa por defecto=.5
 
        starting_point=time.time()        #cronometramos tiempo despues de ingresar todos los datos necesarios.
 
