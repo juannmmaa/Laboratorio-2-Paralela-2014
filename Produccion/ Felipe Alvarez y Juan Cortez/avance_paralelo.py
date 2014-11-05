@@ -75,7 +75,7 @@ def unirImagen():
 	im1=Image.fromarray(im1)
 	im1.save("end.png")
 
-# Resaltamos ciertos tonos como el rojo por sobre los demas para dar un efecto adicional
+# Resaltamos ciertos tonos como el rojo por sobre los demas para dar un efecto adicional.
 def retoquecolor(img):
 	for i in range(img.size[0]):
 		for j in range(img.size[1]):
