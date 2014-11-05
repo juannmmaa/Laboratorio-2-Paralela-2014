@@ -54,7 +54,7 @@ if __name__ == '__main__':
        if len(sys.argv)!=4:
            print "\n ERROR: este script recibe exactamente 3 paramentros ,%d dado(s)." % (len(sys.argv)-1)
            print "\n<ruta de archivo> <ruta de otro archivo> <valor canal alfa (entre 0 y 1)> "
-           print "\nejemplo : python SumaFotosParalelo-v1.1.py archivo1.jpg archivo2.jpg 0.45"
+           print "\nejemplo : python SumaFotosParalelo1.1.py archivo1.jpg archivo2.jpg 0.45"
            print "\n\n Terminando..."
            for i in range(1,size):
                 comm.send(False,dest=i)  # si hay un problema con los paramentros envio un valor false a los nodos
