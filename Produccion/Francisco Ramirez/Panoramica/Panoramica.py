@@ -4,6 +4,7 @@ import Image
 from numpy import *
 from scipy.ndimage import geometric_transform
 from scipy.misc import imsave
+import time
 
 def polar_warp(im,sz,r):
 	#""" Warp an image to a square polar version. """
@@ -34,14 +35,15 @@ def polar_warp(im,sz,r):
 if __name__ == "__main__":
 
 	# load image from http://www.filipecalegario.com/comppho/3assignment/
-	im = array(Image.open('panoramica.jpg'))
-	h,w = im.shape[:2]
-
-	# flip vertical to make math easier for warp
-	im = flipud(im)
-
-	# warp image
-	wim = uint8(polar_warp(im,h,5))
-
-	# save
-	imsave('polar.png',wim)
+    starting_point=time.time()
+    im = array(Image.open('panoramica.jpg'))
+    h,w = im.shape[:2]
+    # flip vertical to make math easier for warp
+    im = flipud(im)
+    # warp image
+    wim = uint8(polar_warp(im,h,5))
+    # save
+    imsave('polar.png',wim)
+    elapsed_time=time.time()-starting_point
+    print ""
+    print "Serial Time [seconds]: " + str(elapsed_time)
